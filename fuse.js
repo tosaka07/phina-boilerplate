@@ -1,4 +1,4 @@
-const {FuseBox, Sparky, UglifyESPlugin, BabelPlugin} = require('fuse-box');
+const {FuseBox, Sparky, UglifyESPlugin} = require('fuse-box');
 
 let fuse;
 let isProduction = false;
@@ -23,7 +23,7 @@ Sparky.task('config', () => {
     sourceMaps: !isProduction,
     cache: !isProduction,
     plugins: isProduction
-    ? [ UglifyESPlugin(), BabelPlugin({presets: ['es2015']}) ]
+    ? [ UglifyESPlugin() ]
     : []
   });
   app = fuse.bundle(outputName).instructions(start);
@@ -31,8 +31,6 @@ Sparky.task('config', () => {
 
 // Develop用
 Sparky.task('default', ['config'], () => {
-  app.hmr();
-
   fuse.dev({
     port: 4444,
     root: outputDir,  // ルートディレクトリを指定。
