@@ -1,7 +1,5 @@
 # phina-boilerplate
 
-## phina-boilerplateとは？
-
 ゲーム開発で使われるエンジン、`phina.js`で開発するためのボイラープレートです。
 
 ## Quick Start
@@ -12,7 +10,7 @@
 $ npm install
 ```
 
-**For development**
+### For development
 
 開発時にはHTTPサーバを起動します。ポートや設定を行いたい場合、`fuse.js`から変更してください。
 
@@ -20,7 +18,7 @@ $ npm install
 $ npm run dev
 ```
 
-**For production**
+### For production
 
 ES5に変換し、BABELで圧縮します。
 
@@ -28,6 +26,6 @@ ES5に変換し、BABELで圧縮します。
 $ npm run build
 ```
 
-## ライセンス
+## License
 
 MIT License
