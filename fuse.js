@@ -1,17 +1,49 @@
-const {FuseBox} = require('fuse-box');
+const {FuseBox, Sparky, UglifyESPlugin, BabelPlugin} = require('fuse-box');
 
-const outputName = "bundle";
+let fuse;
+let isProduction = false;
+
+const outputName = 'bundle';
 const start = `> index.js`;
+const homeDir = 'src/js';
+const outputDir = 'dist/';
+const output = `${outputDir}js/$name.js`;
 
-const fuse = FuseBox.init({
- homeDir: 'src/js',
- output: 'dist/js/$name.js',
- sourceMaps: true,
- cache: true
+
+// Production判定用
+Sparky.task('set-production', () => {
+  isProduction = true;
 });
 
-fuse.bundle(outputName)
-   .instructions(start)
-   .watch();
+// 基本
+Sparky.task('config', () => {
+  fuse = FuseBox.init({
+    homeDir: homeDir,
+    output: output,
+    sourceMaps: !isProduction,
+    cache: !isProduction,
+    plugins: isProduction
+    ? [ UglifyESPlugin(), BabelPlugin({presets: ['es2015']}) ]
+    : []
+  });
+  app = fuse.bundle(outputName).instructions(start);
+});
 
-fuse.run();
+// Develop用
+Sparky.task('default', ['config'], () => {
+  app.hmr();
+
+  fuse.dev({
+    port: 4444,
+    root: outputDir,  // ルートディレクトリを指定。
+    httpServer: true  // http サーバ機能を有効化するかどうかを指定。デフォルトは true
+  });
+
+  app.watch();
+  return fuse.run();
+});
+
+// Production用
+Sparky.task('prod', ['set-production', 'config'], () => {
+  return fuse.run();
+});
