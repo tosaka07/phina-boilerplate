@@ -1,0 +1,20 @@
+{
+  "name": "illust",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tosaka07 <tosaka.tech@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "fuse": "node fuse"
+  },
+  "dependencies": {
+    "phina.js": "git+https://github.com/phinajs/phina.js.git#develop",
+    "pixi.js": "^4.6.1",
+    "typescript": "^2.6.2",
+    "yargs": "^10.0.3"
+  },
+  "devDependencies": {
+    "fuse-box": "^2.5.0-beta.1"
+  }
+}
